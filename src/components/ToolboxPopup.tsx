@@ -12,6 +12,7 @@ const { react } = cgpv;
 
 interface ToolboxPopupProps {
   onClose: (close: boolean) => void;
+  mainFunction: Function;
   show: boolean;
   title: string;
   setLat: React.Dispatch<React.SetStateAction<string>>;
@@ -37,19 +38,18 @@ export const ToolboxPopup = (props: ToolboxPopupProps): JSX.Element => {
   }, [props.show]);
 
   //quand on clique sur la carte, si on attend un clique (on doit être passé par le popup), ouvre le popup et appel la fonction waterdrop
-  //on map.click(waterDropBtnClick)
-  document.getElementById('map-mapWM')?.addEventListener("click", function(){
+  cgpv.api.event.on((cgpv.api.eventNames.MAP as any).EVENT_MAP_SINGLE_CLICK, (payload) => { popupMapClick((payload as any).coordinates.lnglat) }, 'mapWM');
+
+  function popupMapClick(lnglat:string[]){
     if(waitForMapClick){
       setShow(true);
-      waterDropBtnClick();
+      waterDropBtnClick(lnglat);
     }
-  })
-
-
-  function waterDropBtnClick() {
+  }
+  function waterDropBtnClick(lnglat:any) {
     if (waitForMapClick) {
-      props.setLat(Math.floor(Math.random() * 100).toString());
-      props.setLong(Math.floor(Math.random() * 100).toString());
+      props.setLat(lnglat[1]);
+      props.setLong(lnglat[0]);
       waitForMapClick = false;
     } else {
       setShow(false);
@@ -66,21 +66,23 @@ export const ToolboxPopup = (props: ToolboxPopupProps): JSX.Element => {
       className={'overlay'}
     >
       <div className={'popup'}>
-        <h2>{props.title}</h2>
-        <span className={'close'} onClick={closeHandler}>
+        <h3 className="line">{props.title}</h3>
+        <div className={'close'} onClick={closeHandler}>
           &times;
-        </span>
-        <div className={'content'}>Veuillez cliquer à un endroit sur la carte pour afficher le trajet de l'eau</div>
-        <button type="button" className='button-4' onClick={waterDropBtnClick}>Sélectionner un point sur la carte</button>
-        <div>
-          <label>Longitude</label>
-          <input type="number" id="long" value={props.long} onChange={(e) => props.setLong(e.target.value)}></input>
         </div>
+        <div className={'content margin-bot-20'}>Position de départ:</div>
         <div>
-          <label>Latitude</label>
+          <label className="width-80">Longitude:</label>
+          <input type="number" className="margin-bot-5" id="long" value={props.long} onChange={(e) => props.setLong(e.target.value)}></input>
+        </div>
+        <div className="margin-bot-20">
+          <label className="width-80">Latitude:</label>
           <input type="number" id="lat" value={props.lat} onChange={(e) => props.setLat(e.target.value)}></input>
         </div>
-        <button type="button" className="button-4">Go</button>
+        <div className="">
+          <button type="button" className='button-4' onClick={waterDropBtnClick}>Sélectionner un point sur la carte</button>
+          <button type="button" className="button-3 margin-left-10" onClick={()=>props.mainFunction("main function")}>Go</button>
+        </div>
       </div>
     </div>
   );

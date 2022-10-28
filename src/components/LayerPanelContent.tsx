@@ -1,8 +1,9 @@
 
-import { TypeButtonPanel, TypeWindow, TypeLayerConfig, TypeLangString } from 'geoview-core-types';
+import Checkbox from '@mui/material/Checkbox';
+import { AbstractGeoViewLayer, TypeButtonPanel, TypeWindow } from 'geoview-core-types';
 import { API } from '../utils/api';
 import './style.css'
-<script src="https://code.jquery.com/jquery-1.6.4.js"></script>
+
 
 const w = window as TypeWindow;
 
@@ -15,7 +16,7 @@ const { createContext } = react;
 /**
  * Panel Content Properties
  */
-interface CEPanelContentProps {
+interface LayerPanelContentProps {
   mapId: string;
   buttonPanel: TypeButtonPanel;
 }
@@ -26,7 +27,7 @@ interface CEPanelContentProps {
  * @param {CEPanelContentProps} props panel content properties
  * @returns {JSX.Element} the new create panel content
  */
-export const CEPanelContent = (props: CEPanelContentProps): JSX.Element => {
+export const LayerPanelContent = (props: LayerPanelContentProps): JSX.Element => {
   const { buttonPanel, mapId } = props;
 
   const { ui, react } = cgpv;
@@ -38,6 +39,17 @@ export const CEPanelContent = (props: CEPanelContentProps): JSX.Element => {
 
   }, []);
 
+  
+  var layersArray = cgpv.api.map(mapId).layer.layers;
+  let layerList=[];
+  
+  for (let key in layersArray) {
+    layerList.push(
+      <div>
+        <input className='pannelCheckboxInput' type="checkbox" key={key} onChange={e=>updateLayer(e, key)} defaultChecked={cgpv.api.map(mapId).layer.layers[key]?.getVisible()} /><label key={key} className='pannelLabel'>Couche {key}</label>
+      </div>
+    );
+  }
 
   var wmsLayerActive = true;
 
@@ -81,21 +93,17 @@ export const CEPanelContent = (props: CEPanelContentProps): JSX.Element => {
     else {
       wmsLayerActive = true;
       cgpv.api.map(mapId).layer.vector?.deleteGeometryGroup('myGometryGroup');
-
-
-      console.log(cgpv.api);
-
-      //const layerId = cgpv.api.map(mapId).layer.addLayer(config);
-      //cgpv.api.maps.mapId.layer.layers.wmsLYR4.setVisible(false);
-
-      //cgpv.api.maps.wmsLYR4.layer.layers.EsriFeaturewmsLYR4.setVisible(false);
     }
   }
-  //cgpv.api.event.on(cgpv.api.eventNames.MAP.EVENT_MAP_SINGLE_CLICK, (payload) => { console.log(payload.coordinates.lnglat) }, 'ogcFeatureLYR7');
-  //cgpv.api.event.on(cgpv.api.eventNames.MAP.
+
+  function updateLayer(e:any, layerToUpdate:string){
+    cgpv.api.map(mapId).layer.layers[layerToUpdate]?.setVisible(e.target.checked);
+  }
+  
   return (
   <div>
     <button type="button" className='button-4' onClick={updateWmsLayer}>Activer/désactiver une layer GeoJson</button>
+     {layerList}
   </div>
     
   );
