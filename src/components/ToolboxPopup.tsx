@@ -28,7 +28,6 @@ export const ToolboxPopup = (props: ToolboxPopupProps): JSX.Element => {
   const [show, setShow] = useState(false);
 
   const closeHandler = (e: any) => {
-    console.log('popup visibility (from popup)should be '+e)
     setShow(false);
     props.onClose(false);
   };
@@ -39,10 +38,9 @@ export const ToolboxPopup = (props: ToolboxPopupProps): JSX.Element => {
   }, [props.show]);
 
   //quand on clique sur la carte, si on attend un clique (on doit être passé par le popup), ouvre le popup et appel la fonction waterdrop
-  cgpv.api.event.on((cgpv.api.eventNames.MAP as any).EVENT_MAP_SINGLE_CLICK, (payload) => { popupMapClick((payload as any).coordinates.lnglat), console.log('mapclick') }, 'mapWM');
+  cgpv.api.event.on((cgpv.api.eventNames.MAP as any).EVENT_MAP_SINGLE_CLICK, (payload) => { popupMapClick((payload as any).coordinates.lnglat) }, 'mapWM');
 
   function popupMapClick(lnglat:string[]){
-    //console.log(`waitForMapClick: `+waitForMapClick);
     if(waitForMapClick){
       getCoordinates(lnglat);
       setShow(true);
@@ -58,7 +56,6 @@ export const ToolboxPopup = (props: ToolboxPopupProps): JSX.Element => {
     } else {
       setShow(false);
       waitForMapClick = true;
-      console.log('ready for map click: '+waitForMapClick)
     }
   }
 

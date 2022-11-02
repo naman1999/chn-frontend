@@ -33,7 +33,6 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
 
   //function to close the popup
   const popupCloseHandler = (e:boolean) => {
-    console.log("pop up visible should be "+e);
     setPopUpVisibility(e);
   };
 
@@ -72,7 +71,7 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
           </div>
 
           <div className="">
-            <button type="button" className="button-3 margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), popupCloseHandler(true), console.log('cachement button click') }}>Cachement tool</button>
+            <button type="button" className="button-3 margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), popupCloseHandler(true) }}>Cachement tool</button>
           </div>
           <div className="">
             <button type="button" className="button-3 margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('2') }}>Raindrop tool</button>

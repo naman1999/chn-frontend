@@ -93,9 +93,6 @@ const App = (): JSX.Element => {
         'fr': translationFr,
       };
 
-
-      console.log(cgpv.api);
-
       // get map instance
       const mapInstance = cgpv.api.map('mapWM');
 
