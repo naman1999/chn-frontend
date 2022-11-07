@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import "./style.css"
 import { TypeIconButtonProps, TypeWindow } from "geoview-core-types";
 import { ToolboxPopup } from "./ToolboxPopup";
-import { getCachement } from "../querries/cachement";
+import { getCachement } from "../queries/cachement";
 
 const w = window as TypeWindow;
 const cgpv = w['cgpv'];

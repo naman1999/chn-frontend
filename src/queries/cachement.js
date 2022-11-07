@@ -1,7 +1,7 @@
 const Router = require('express-promise-router')
 // var router = express.Router();
 const router = new Router()
-const db = require('../queries')
+const db = require('./queries.js')
 
 module.exports = router;
 const pgp = require('pg-promise');
