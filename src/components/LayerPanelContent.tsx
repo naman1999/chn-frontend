@@ -40,18 +40,19 @@ export const LayerPanelContent = (props: LayerPanelContentProps): JSX.Element =>
   }, []);
 
   
-  var layersArray = cgpv.api.map(mapId).layer.layers;
+  var layersArray = (cgpv.api.map(mapId).layer as any).geoviewLayers;
   let layerList=[];
+  console.log(layersArray);
   
   for (let key in layersArray) {
     layerList.push(
       <div>
-        <input className='pannelCheckboxInput' type="checkbox" key={key} onChange={e=>updateLayer(e, key)} defaultChecked={cgpv.api.map(mapId).layer.layers[key]?.getVisible()} /><label key={key} className='pannelLabel'>Couche {key}</label>
+        <input className='pannelCheckboxInput' type="checkbox" key={key} onChange={e=>updateLayer(e, key)} defaultChecked={(cgpv.api.map(mapId).layer as any).geoviewLayers[key]?.getVisible()} /><label key={key} className='pannelLabel'>Couche {key}</label>
       </div>
     );
   }
-
-  var wmsLayerActive = true;
+  console.log(cgpv.api.map(mapId));
+  var geoJsonLayerActive = true;
 
   function fetchAndDraw(){
     var rand = Math.floor(Math.random() * 4);
@@ -85,24 +86,24 @@ export const LayerPanelContent = (props: LayerPanelContentProps): JSX.Element =>
   }
   
   
-  function updateWmsLayer(){
-    if (wmsLayerActive) {
-      wmsLayerActive = false;
+  function updateGeoJsonLayer(){
+    if (geoJsonLayerActive) {
+      geoJsonLayerActive = false;
       fetchAndDraw();
     }
     else {
-      wmsLayerActive = true;
+      geoJsonLayerActive = true;
       cgpv.api.map(mapId).layer.vector?.deleteGeometryGroup('myGometryGroup');
     }
   }
 
   function updateLayer(e:any, layerToUpdate:string){
-    cgpv.api.map(mapId).layer.layers[layerToUpdate]?.setVisible(e.target.checked);
+    (cgpv.api.map(mapId).layer as any).geoviewLayers[layerToUpdate]?.setVisible(e.target.checked);
   }
   
   return (
   <div>
-    <button type="button" className='button-4' onClick={updateWmsLayer}>Activer/désactiver une layer GeoJson</button>
+    <button type="button" className='button-4' onClick={updateGeoJsonLayer}>Activer/désactiver une layer GeoJson</button>
      {layerList}
   </div>
     

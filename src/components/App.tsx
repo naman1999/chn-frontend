@@ -189,7 +189,15 @@ const App = (): JSX.Element => {
         'listOfGeoviewLayerConfig': [
           {
             'geoviewLayerId': 'wmsLYR4',
-            'metadataAccessPath': { 'en': 'https://maps.geogratis.gc.ca/wms/hydro_network_en'},
+            'geoviewLayerName': {
+              'en': 'hydro network',
+              'fr': 'hydro network'
+            },
+            'metadataAccessPath': {
+              'en': 'https://maps.geogratis.gc.ca/wms/hydro_network_en',
+              
+              'fr': 'https://maps.geogratis.gc.ca/wms/hydro_network_en'
+            },
             'geoviewLayerType': 'ogcWms',
             'listOfLayerEntryConfig': [
               {
@@ -212,6 +220,21 @@ const App = (): JSX.Element => {
             'listOfLayerEntryConfig': [
               {
                 'layerId': 'lakes'
+              }
+            ]
+          },
+          {
+            'geoviewLayerId': 'wmsLYR1-msi',
+            'geoviewLayerName': {
+              'en': 'MSI'
+            },
+            'metadataAccessPath': {
+              'en': 'https://datacube.services.geo.ca/ows/msi'
+            },
+            'geoviewLayerType': 'ogcWms',
+            'listOfLayerEntryConfig': [
+              {
+                'layerId': 'msi-94-or-more'
               }
             ]
           }

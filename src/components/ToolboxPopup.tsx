@@ -83,7 +83,7 @@ export const ToolboxPopup = (props: ToolboxPopupProps): JSX.Element => {
         </div>
         <div className="">
           <button type="button" className='button-4' onClick={getCoordinates}>Sélectionner un point sur la carte</button>
-          <button type="button" className="button-3 margin-left-10" onClick={()=>props.mainFunction("main function")}>Go</button>
+          <button type="button" className="button-3 margin-left-10" onClick={()=>props.mainFunction(props.long, props.lat, cgpv.api.map('mapWM').currentProjection)}>Go</button>
         </div>
       </div>
     </div>
