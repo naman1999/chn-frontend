@@ -1,10 +1,8 @@
-const Router = require('express-promise-router')
-// var router = express.Router();
-const router = new Router()
+export async function getCachement(long, lat, projection){console.log(long + " " + lat + " " + projection)}
+/*
 const db = require('./queries.js')
 
 module.exports = router;
-const pgp = require('pg-promise');
 export async function getCachement(long, lat, projection){
     const neo4j = require('neo4j-driver')
   // const native = require('neo4j-driver').toNativeTypes
@@ -72,4 +70,4 @@ export async function getCachement(long, lat, projection){
     catch(err){
         console.log(err);
     }
-}
+}*/
