@@ -1,73 +1,54 @@
-export async function getCachement(long, lat, projection){console.log(long + " " + lat + " " + projection)}
-/*
-const db = require('./queries.js')
+// const axios = require('axios').default;
 
-module.exports = router;
-export async function getCachement(long, lat, projection){
-    const neo4j = require('neo4j-driver')
-  // const native = require('neo4j-driver').toNativeTypes
-  const driver = new neo4j.driver("neo4j://localhost:7687", neo4j.auth.basic("neo4j", "sherbrooke"));
-  const session = driver.session();
-  // easy -71.874358,45.375624
-  // -71.79891694,45.14540087  1k
-  // -72.0027836,45.2029280
-  // -72.0530206,45.2809680   8k
-  // HARD -71.8898964,45.4059346  23 k
-  // pg routing function to get NHDID for given cordinate
-    const cords = [long,lat]
-    const params = [long,lat, projection]
-    const neo1text = `
-    SELECT flow.nhdplusid FROM nhd_flow_catchment as catch, 
-    nhdflowlinejoined as flow WHERE ST_Intersects(catch.geom, flow.geom) 
-    AND ST_Contains(catch.geom, ST_Point($1,$2, $3)::geometry);`
-
-    var startTime = performance.now()
-  try{
-    await db.query('BEGIN')
-    const resu = await db.query(neo1text, params)
-    let geo = resu.rows[0].nhdplusid
-    // let geo = Object.values(res[0])
-    // geo = geo.toString();
-    console.log('\n\nThe catchment NHDID associated to these coordinates:('+cords.toString()+ ') is: '+geo);
-
-    await driver.verifyConnectivity()
-    console.log('\nNEO4j Query starting. \nDriver created')
-    const result = await session.readTransaction(tx =>
-      tx.run(
-        `MATCH(s:Segment) WHERE s.NodeID = $nodeid 
-        OPTIONAL MATCH (s)-[d:upstream*]->(n) WITH s+COLLECT(DISTINCT n) 
-        AS v UNWIND v as a RETURN a.NodeID as NodeID`
-        // `MATCH(s:Segment) WHERE s.NodeID = $nodeid 
-        // OPTIONAL MATCH (s)-[d:downstream*]->(p) WITH s+COLLECT(DISTINCT p) 
-        // AS v UNWIND v as a RETURN a.NodeID as NodeID`
-        ,
-        { nodeid: ''+geo } 
-      )
-    ) 
-    var arr = []
-    const d_area = result.records.map(row =>{
-      arr.push(row.get(0))
-    })
-    // console.log('array of ids:'+arr);    
-    // var record = result.records
-    // var arr = []
-    // for (let i = 0; i < 2; i++) {
-    //   singlerecord = record[i]
-    //   greeting = singlerecord.get(0)
-    //   arr.push(greeting)
-    // }
-    console.log('\nNumber of catchment: '+arr.length);
-    var ids = arr.toString();
-    console.log('Drainage area found')
-    // console.log('ids: '+ids);
-    
-    await session.close()
-    console.log('Session Closed')
-    await driver.close()
-    console.log('Driver Closed')
-
+import axios from 'axios';
+export async function getCachement(long, lat, projection){console.log(long + " " + lat + " " + projection)
+axios.get('http://localhost:3000/users/neo2/'+long+'/'+lat+'/'+projection
+// axios.get('http://localhost:3000/users/ne'
+// {
+//   params: {
+//   long: long
+//   // lat: lat,
+//   // projection: projection
+// }}
+)   
+  .then(function (response) {
+    console.log(response);
+    const mapId = 'mapWM';
+    cgpv.api.map(mapId).layer.vector?.createGeometryGroup('myGometryGroup');
+    const defaultId = cgpv.api.map(mapId).layer.vector?.defaultGeometryGroupId;
+    if (response.data[0].row_to_json.features[0].geometry.type=='Polygon'){
+        const geom = cgpv.api.map(mapId).layer.vector?.addPolygon(
+          response.data[0].row_to_json.features[0].geometry.coordinates,{
+            style: {
+              strokeColor: '#3d85c6',
+              strokeWidth: 5,
+              strokeOpacity: 1,
+            },
+          }
+        );
+        cgpv.api.map(mapId).layer.vector?.addToGeometryGroup(
+          geom, 'myGometryGroup'
+        );
+        cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
     }
-    catch(err){
-        console.log(err);
+    else{
+    for (const element of response.data[0].row_to_json.features[0].geometry.coordinates){
+      const geom = cgpv.api.map(mapId).layer.vector?.addPolygon(
+        element,{
+          style: {
+            strokeColor: '#3d85c6',
+            strokeWidth: 5,
+            strokeOpacity: 1,
+          },
+        }
+      );
+      cgpv.api.map(mapId).layer.vector?.addToGeometryGroup(
+        geom, 'myGometryGroup'
+      );
+      cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
+    };
     }
-}*/
+  })
+  .catch(function (error) {     
+     console.log(error);   })   
+}
