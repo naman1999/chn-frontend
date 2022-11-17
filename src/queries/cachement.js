@@ -1,5 +1,3 @@
-// const axios = require('axios').default;
-
 import axios from 'axios';
 export async function getCachement(long, lat, projection){console.log(long + " " + lat + " " + projection)
 axios.get('http://localhost:3000/users/neo2/'+long+'/'+lat+'/'+projection
