@@ -1,19 +1,16 @@
 // const axios = require('axios').default;
 
 import axios from 'axios';
-export async function getCachement(long, lat, projection){console.log(long + " " + lat + " " + projection)
-axios.get('http://localhost:3000/users/neo2/'+long+'/'+lat+'/'+projection
-// axios.get('http://localhost:3000/users/ne'
-// {
-//   params: {
-//   long: long
-//   // lat: lat,
-//   // projection: projection
-// }}
-)   
+export async function getCachement(long, lat, projection){
+  //activate loader icon
+  document.getElementById('loader').style.visibility = "visible";;
+
+  console.log(long + " " + lat + " " + projection)
+  axios.get('http://localhost:3000/users/neo2/'+long+'/'+lat+'/'+projection)   
   .then(function (response) {
     console.log(response);
     const mapId = 'mapWM';
+    cgpv.api.map(mapId).layer.vector?.deleteGeometryGroup('myGometryGroup');
     cgpv.api.map(mapId).layer.vector?.createGeometryGroup('myGometryGroup');
     const defaultId = cgpv.api.map(mapId).layer.vector?.defaultGeometryGroupId;
     if (response.data[0].row_to_json.features[0].geometry.type=='Polygon'){
@@ -48,7 +45,9 @@ axios.get('http://localhost:3000/users/neo2/'+long+'/'+lat+'/'+projection
       cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
     };
     }
+    document.getElementById('loader').style.visibility = "hidden";;
   })
-  .catch(function (error) {     
-     console.log(error);   })   
+  .catch(function (error) { 
+    document.getElementById('loader').style.visibility = "hidden";;    
+    console.log(error);   })   
 }

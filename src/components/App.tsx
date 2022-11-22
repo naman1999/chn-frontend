@@ -44,12 +44,11 @@ const App = (): JSX.Element => {
   const [toolboxVisibility, setToolboxVisibility] = useState(false);
   const [long, setLong] = useState("");
   const [lat, setLat] = useState("");
-  
 
-  /*const toolButton: TypeIconButtonProps = {
+  const toolboxButton: TypeIconButtonProps = {
     // set ID to toolboxButtonPanel so that it can be accessed from the core viewer
-    id: 'toolButtonPanel',
-    tooltip: 'Tool',
+    id: 'toolboxButtonPanel',
+    tooltip: 'Tool box',
     tooltipPlacement: 'right',
     children:
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="svg-toolbox">
@@ -58,23 +57,8 @@ const App = (): JSX.Element => {
       <path fill-rule="evenodd" d="M12.556 17.329l4.183 4.182a3.375 3.375 0 004.773-4.773l-3.306-3.305a6.803 6.803 0 01-1.53.043c-.394-.034-.682-.006-.867.042a.589.589 0 00-.167.063l-3.086 3.748zm3.414-1.36a.75.75 0 011.06 0l1.875 1.876a.75.75 0 11-1.06 1.06L15.97 17.03a.75.75 0 010-1.06z" clip-rule="evenodd" />
     </svg>,
     visible: true,
-    onClick: ()=>popupCloseHandler(true),
-  };*/
-
-  const toolboxButton: TypeIconButtonProps = {
-    // set ID to toolboxButtonPanel so that it can be accessed from the core viewer
-    id: 'toolboxButtonPanel',
-    tooltip: 'Tool box',
-    tooltipPlacement: 'right',
-    children:
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="svg-toolbox">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
-    </svg>,
-    visible: true,
     onClick: ()=>toolboxCloseHandler(true),
   };
-
-  
 
   const toolboxCloseHandler = (e:boolean) => {
     setToolboxVisibility(e);
@@ -144,18 +128,21 @@ const App = (): JSX.Element => {
       );
 
 
+      //add toolbox button in the navbar
       cgpv.api.map('mapWM').navBarButtons.createNavbarButtonGroup('mygroup');
-      //ajout du bouton toolbox
-      //cgpv.api.map('mapWM').navBarButtons.createNavbarButton(toolButton, 'mygroup');
-
-      //ajout du vrai bouton toolbox
       cgpv.api.map('mapWM').navBarButtons.createNavbarButton(toolboxButton, 'mygroup');
       
+      //add logo next to sidebar
+      var nhn_icon = document.createElement('img');
+      nhn_icon.src = './star.png';
+      nhn_icon.classList.add('nhn-icon');
+      document.getElementById("map-mapWM")?.appendChild(nhn_icon);
     });
   }, []);
 
   return (
     <div>
+    <div id="loader"></div>
       <Toolbox
         onClose={toolboxCloseHandler}
         show={toolboxVisibility}
@@ -244,7 +231,10 @@ const App = (): JSX.Element => {
       'suportedLanguages': ['en', 'fr'],
       'corePackages': ['basemap-panel']
       }"
-  ></div>
+  >
+    
+  </div>
+  
   </div>
     
   );

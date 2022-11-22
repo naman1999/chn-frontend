@@ -103,7 +103,7 @@ export const LayerPanelContent = (props: LayerPanelContentProps): JSX.Element =>
   
   return (
   <div>
-    <button type="button" className='button-4' onClick={updateGeoJsonLayer}>Activer/désactiver une layer GeoJson</button>
+    {/* <button type="button" className='button-4' onClick={updateGeoJsonLayer}>Activer/désactiver une layer GeoJson</button> */}
      {layerList}
   </div>
     

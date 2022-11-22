@@ -66,22 +66,25 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
         className={'overlay'}
       >
         <div className={'popup'}>
-          <h3 className="line">{props.title}</h3>
-          <div className={'close'} onClick={closeToolboxHandler}>
-            &times;
+          <div className="toolbox-title margin-left-10">
+            <h3 className="line">{props.title}</h3>
+            <div className={'close'} onClick={closeToolboxHandler}>
+              &times;
+            </div>
           </div>
+          
 
           <div className="">
-            <button type="button" className="button-3 margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), popupCloseHandler(true) }}>Cachement tool</button>
+            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), popupCloseHandler(true) }}>Drainage Area</button>
           </div>
           <div className="">
-            <button type="button" className="button-3 margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('2') }}>Raindrop tool</button>
+            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('2') }}>Raindrop tool</button>
           </div>
           <div className="">
-            <button type="button" className="button-3 margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('3') }}>Other tool</button>
+            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('3') }}>Other tool</button>
           </div>
           <div className="">
-            <button type="button" className="button-3 margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('4') }}>Last tool</button>
+            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('4') }}>Last tool</button>
           </div>
         </div>
       </div>

@@ -68,23 +68,29 @@ export const ToolboxPopup = (props: ToolboxPopupProps): JSX.Element => {
       className={'overlay'}
     >
       <div className={'popup'}>
-        <h3 className="line">{props.title}</h3>
-        <div className={'close'} onClick={closeHandler}>
-          &times;
+        
+        <div className="toolbox-title margin-left-10">
+          <h3 className="line">{props.title}</h3>
+          <div className={'close'} onClick={closeHandler}>
+            &times;
+          </div>
         </div>
-        <div className={'content margin-bot-20'}>Position de départ:</div>
-        <div>
-          <label className="width-80">Longitude:</label>
-          <input type="number" className="margin-bot-5" id="long" value={props.long} onChange={(e) => props.setLong(e.target.value)}></input>
+        <div className="toolbox-popup-content">
+          <div className={'content margin-bot-20'}>Position de départ:</div>
+          <div>
+            <label className="width-80">Longitude:</label>
+            <input type="number" className="margin-bot-5" id="long" value={props.long} onChange={(e) => props.setLong(e.target.value)}></input>
+          </div>
+          <div className="margin-bot-20">
+            <label className="width-80">Latitude:</label>
+            <input type="number" id="lat" value={props.lat} onChange={(e) => props.setLat(e.target.value)}></input>
+          </div>
+          <div className="">
+            <button type="button" className='button-4' onClick={getCoordinates}>Sélectionner un point sur la carte</button>
+            <button type="button" className="button-3 margin-left-10" onClick={()=>{closeHandler(this), props.mainFunction(props.long, props.lat, cgpv.api.map('mapWM').currentProjection)}}>Go</button>
+          </div>
         </div>
-        <div className="margin-bot-20">
-          <label className="width-80">Latitude:</label>
-          <input type="number" id="lat" value={props.lat} onChange={(e) => props.setLat(e.target.value)}></input>
-        </div>
-        <div className="">
-          <button type="button" className='button-4' onClick={getCoordinates}>Sélectionner un point sur la carte</button>
-          <button type="button" className="button-3 margin-left-10" onClick={()=>props.mainFunction(props.long, props.lat, cgpv.api.map('mapWM').currentProjection)}>Go</button>
-        </div>
+        
       </div>
     </div>
   );

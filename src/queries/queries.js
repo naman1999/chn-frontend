@@ -1,5 +1,5 @@
 // const { request, response } = require('./app')
-// const Pool = require('pg').Pool
+//const Pool = require('pg').Pool
 // const pool = new Pool({
 //   user: 'naman',
 //   host: 'localhost',
