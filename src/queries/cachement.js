@@ -3,33 +3,16 @@ export async function getCachement(long, lat, projection){
   //activate loader icon
   document.getElementById('loader').style.visibility = "visible";;
 
+  const defaultId = cgpv.api.map(mapId).layer.vector?.defaultGeometryGroupId;
   console.log(long + " " + lat + " " + projection)
   axios.get('http://localhost:3000/users/neo2/'+long+'/'+lat+'/'+projection)   
   .then(function (response) {
     console.log(response);
     const mapId = 'mapWM';
-    cgpv.api.map(mapId).layer.vector?.deleteGeometryGroup('myGometryGroup');
-    cgpv.api.map(mapId).layer.vector?.createGeometryGroup('myGometryGroup');
-    const defaultId = cgpv.api.map(mapId).layer.vector?.defaultGeometryGroupId;
+    cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
     if (response.data[0].row_to_json.features[0].geometry.type=='Polygon'){
-        const geom = cgpv.api.map(mapId).layer.vector?.addPolygon(
-          response.data[0].row_to_json.features[0].geometry.coordinates,{
-            style: {
-              strokeColor: '#3d85c6',
-              strokeWidth: 5,
-              strokeOpacity: 1,
-            },
-          }
-        );
-        cgpv.api.map(mapId).layer.vector?.addToGeometryGroup(
-          geom, 'myGometryGroup'
-        );
-        cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
-    }
-    else{
-    for (const element of response.data[0].row_to_json.features[0].geometry.coordinates){
       const geom = cgpv.api.map(mapId).layer.vector?.addPolygon(
-        element,{
+        response.data[0].row_to_json.features[0].geometry.coordinates,{
           style: {
             strokeColor: '#3d85c6',
             strokeWidth: 5,
@@ -37,10 +20,19 @@ export async function getCachement(long, lat, projection){
           },
         }
       );
-      cgpv.api.map(mapId).layer.vector?.addToGeometryGroup(
-        geom, 'myGometryGroup'
-      );
+    }
+    else{
       cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
+      for (const element of response.data[0].row_to_json.features[0].geometry.coordinates){
+        const geom = cgpv.api.map(mapId).layer.vector?.addPolygon(
+          element,{
+            style: {
+              strokeColor: '#3d85c6',
+              strokeWidth: 5,
+              strokeOpacity: 1,
+            },
+          }
+        );
     };
     }
     document.getElementById('loader').style.visibility = "hidden";;

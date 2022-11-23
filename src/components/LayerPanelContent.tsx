@@ -45,6 +45,7 @@ export const LayerPanelContent = (props: LayerPanelContentProps): JSX.Element =>
   console.log(layersArray);
   
   for (let key in layersArray) {
+    (cgpv.api.map(mapId).layer as any).geoviewLayers[key]?.setVisible(false)
     layerList.push(
       <div>
         <input className='pannelCheckboxInput' type="checkbox" key={key} onChange={e=>updateLayer(e, key)} defaultChecked={(cgpv.api.map(mapId).layer as any).geoviewLayers[key]?.getVisible()} /><label key={key} className='pannelLabel'>Couche {key}</label>
@@ -62,9 +63,8 @@ export const LayerPanelContent = (props: LayerPanelContentProps): JSX.Element =>
     fetch('http://geogratis.gc.ca/services/delimitation/en/drainage-gen/'+json[rand]+'.json')
     .then(response => response.json())
     .then((jsonData) => {
-      cgpv.api.map(mapId).layer.vector?.createGeometryGroup('myGometryGroup');
-      const defaultId = cgpv.api.map(mapId).layer.vector?.defaultGeometryGroupId;
       for (const element of jsonData.geometry.coordinates){
+        console.log(element);
         const geom = cgpv.api.map(mapId).layer.vector?.addPolygon(
           element,{
             style: {
@@ -74,10 +74,7 @@ export const LayerPanelContent = (props: LayerPanelContentProps): JSX.Element =>
             },
           }
         );
-        cgpv.api.map(mapId).layer.vector?.addToGeometryGroup(
-          geom, 'myGometryGroup'
-        );
-        cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
+        
       };
     })
     .catch((error) => {
@@ -85,6 +82,27 @@ export const LayerPanelContent = (props: LayerPanelContentProps): JSX.Element =>
     });
   }
   
+  function addPolygon() {
+    //cgpv.api.map(mapId).layer.vector?.setActiveGeometryGroup(document.getElementById('groupname').value);
+    // call an api function to draw a polygon
+    const polygon = cgpv.api.map(mapId).layer.vector?.addPolygon(
+      [
+        [
+          [-109.05, 50],
+          [-109.03, 54],
+          [-102.05, 54],
+          [-102.04, 50],
+        ],
+      ],
+      {
+        style: {
+          strokeColor: '#000',
+          strokeWidth: 5,
+          strokeOpacity: 0.8,
+        },
+      }
+    );
+  }
   
   function updateGeoJsonLayer(){
     if (geoJsonLayerActive) {
@@ -92,8 +110,9 @@ export const LayerPanelContent = (props: LayerPanelContentProps): JSX.Element =>
       fetchAndDraw();
     }
     else {
+      const defaultId = cgpv.api.map(mapId).layer.vector?.defaultGeometryGroupId;
       geoJsonLayerActive = true;
-      cgpv.api.map(mapId).layer.vector?.deleteGeometryGroup('myGometryGroup');
+      cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
     }
   }
 
@@ -103,7 +122,7 @@ export const LayerPanelContent = (props: LayerPanelContentProps): JSX.Element =>
   
   return (
   <div>
-    {/* <button type="button" className='button-4' onClick={updateGeoJsonLayer}>Activer/désactiver une layer GeoJson</button> */}
+    { <button type="button" className='button-4' onClick={addPolygon}>Activer/désactiver une layer GeoJson</button> }
      {layerList}
   </div>
     
