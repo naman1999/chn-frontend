@@ -134,7 +134,7 @@ const App = (): JSX.Element => {
       
       //add logo next to sidebar
       var nhn_icon = document.createElement('img');
-      nhn_icon.src = './star.png';
+      nhn_icon.src = './nhn-logo.png';
       nhn_icon.classList.add('nhn-icon');
       document.getElementById("map-mapWM")?.appendChild(nhn_icon);
     });
