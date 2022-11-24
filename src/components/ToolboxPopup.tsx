@@ -32,7 +32,6 @@ export const ToolboxPopup = (props: ToolboxPopupProps): JSX.Element => {
     props.onClose(false);
   };
 
-
   useEffect(() => {
     setShow(props.show);
   }, [props.show]);

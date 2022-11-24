@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import "./style.css"
 import { TypeIconButtonProps, TypeWindow } from "geoview-core-types";
 import { ToolboxPopup } from "./ToolboxPopup";
-import { getCachement } from "../queries/cachement";
+import { getCachement, testGetCachement } from "../queries/cachement";
 
 const w = window as TypeWindow;
 const cgpv = w['cgpv'];
@@ -50,7 +50,7 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
     <div>
       <ToolboxPopup
         onClose={popupCloseHandler}
-        mainFunction={getCachement}
+        mainFunction={testGetCachement}
         show={popupVisibility}
         title="Tool Box - drainage area"
         setLat={props.setLat}
