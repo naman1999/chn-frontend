@@ -11,10 +11,10 @@
     "url": "https://github.com/Sacha-rncan/hydronetwork"
   },
   "scripts": {
-    "serve": "webpack serve --progress --color --config webpack.dev.js",
-    "build": "webpack --progress --color --config webpack.prod.js",
     "predeploy":"npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "serve": "webpack serve --progress --color --config webpack.dev.js",
+    "build": "webpack --progress --color --config webpack.prod.js"
   },
   "dependencies": {
     "@emotion/react": "^11.8.1",
