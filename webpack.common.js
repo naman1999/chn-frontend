@@ -55,7 +55,7 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.html',
+      template: './index.html',
       filename: 'index.html',
       title: 'GeoView Climate Engine Demo',
     }),
