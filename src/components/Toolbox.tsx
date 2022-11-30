@@ -76,7 +76,7 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
       <ToolboxPopup
         id="drainage"
         onClose={drainagePopupCloseHandler}
-        mainFunction={testGetCachement}
+        mainFunction={getCachement}
         show={popupVisibility}
         title="Tool Box - drainage area"
         setLat={props.setLat}
@@ -133,6 +133,12 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
             <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('option 4') }}>
               <i className="fa fa-arrows-h"></i>
               Distance
+            </button>
+          </div>
+          <div className="">
+            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('option 5') }}>
+              <i className="fa fa-arrows-h"></i>
+              Network path
             </button>
           </div>
         </div>
