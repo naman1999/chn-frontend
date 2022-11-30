@@ -36,10 +36,10 @@ export async function getCachement(long, lat, projection) {
           );
         };
       }
-      document.getElementById('loader').style.visibility = "hidden";;
+      document.getElementById('loader').style.visibility = "hidden";
     })
     .catch(function (error) {
-      document.getElementById('loader').style.visibility = "hidden";;
+      document.getElementById('loader').style.visibility = "hidden";
       console.log(error);
     })
 }
