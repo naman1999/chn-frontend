@@ -55,7 +55,7 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './index.html',
+      template: './public/index.html',
       filename: 'index.html',
       title: 'GeoView - Canadian Hydronetwork',
     }),

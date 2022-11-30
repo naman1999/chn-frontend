@@ -113,16 +113,27 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
           </div>
 
           <div className="">
-            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), drainagePopupCloseHandler(true) }}>Drainage Area</button>
+            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), drainagePopupCloseHandler(true) }}>
+              <i className="fa fa-tint" aria-hidden="true"></i>
+              Drainage Area
+            </button>
           </div>
           <div className="">
-            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), downstreamPopupCloseHandler(true) }}>Downstream flow path</button>
+            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), downstreamPopupCloseHandler(true) }}>
+              <i className="fa fa-faucet-drip"></i>
+              Downstream flow path</button>
           </div>
           <div className="">
-            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('option 3') }}>Upstream</button>
+            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('option 3') }}>
+              <i className="fa fa-mountain"></i>
+              Upstream
+            </button>
           </div>
           <div className="">
-            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('option 4') }}>Distance</button>
+            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('option 4') }}>
+              <i className="fa fa-arrows-h"></i>
+              Distance
+            </button>
           </div>
         </div>
       </div>

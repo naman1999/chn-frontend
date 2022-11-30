@@ -257,6 +257,11 @@ input {
   pointer-events: none;
 }
 
+.fa {
+  margin-right: 5px;
+  font-size: 10px;
+}
+
 /******************************** LOADER ********************************/
 #loader {
   border: 8px solid #f3f3f3;
