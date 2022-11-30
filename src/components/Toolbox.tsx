@@ -25,6 +25,7 @@ interface ToolboxProps {
 export const Toolbox = (props: ToolboxProps): JSX.Element => {
   const [showToolbox, setShowToolbox] = useState(false);
   const [popupVisibility, setPopUpVisibility] = useState(false);
+  const [downstreamPopupVisibility, setDownstreamPopUpVisibility] = useState(false);
 
   //function to close the toolbox
   const closeToolboxHandler = (e: any) => {
@@ -32,10 +33,38 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
     props.onClose(false);
   };
 
-  //function to close the popup
-  const popupCloseHandler = (e:boolean) => {
+  //function to close the drainage popup
+  const drainagePopupCloseHandler = (e:boolean) => {
     setPopUpVisibility(e);
   };
+
+  //function to close the downstream popup
+  const downstreamPopupCloseHandler = (e:boolean) => {
+    setDownstreamPopUpVisibility(e);
+  };
+
+  //const to remember the popup option to open after map click
+  var popupToOpen: string;
+  var readyToOpen: boolean = false;
+
+  const setPopupToOpen = (id:string) => {
+    console.log("setPopupToOpen, id - " + id);
+    popupToOpen = id;
+    readyToOpen =true;
+  }
+  //function to open or close the different popup options
+  const openPopupOption = (lnglat:string[]) => {
+    if(readyToOpen){
+      props.setLat(lnglat[1]);
+      props.setLong(lnglat[0]);
+      if(popupToOpen == "drainage") {setPopUpVisibility(true);}
+      else if(popupToOpen == "downstream") {setDownstreamPopUpVisibility(true);}
+      readyToOpen = false;
+    }
+  }
+
+  //call openPopupOption on map click
+  cgpv.api.event.on((cgpv.api.eventNames.MAP as any).EVENT_MAP_SINGLE_CLICK, (payload) => { openPopupOption((payload as any).coordinates.lnglat) }, 'mapWM');
 
   useEffect(() => {
     setShowToolbox(props.show);
@@ -49,7 +78,8 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
   return (
     <div>
       <ToolboxPopup
-        onClose={popupCloseHandler}
+        id="drainage"
+        onClose={drainagePopupCloseHandler}
         mainFunction={testGetCachement}
         show={popupVisibility}
         title="Tool Box - drainage area"
@@ -57,6 +87,19 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
         setLong={props.setLong}
         lat={props.lat}
         long={props.long}
+        setVisibility={setPopupToOpen}
+      />
+      <ToolboxPopup
+        id="downstream"
+        onClose={downstreamPopupCloseHandler}
+        mainFunction={testGetCachement}
+        show={downstreamPopupVisibility}
+        title="Tool Box - downstream flow path"
+        setLat={props.setLat}
+        setLong={props.setLong}
+        lat={props.lat}
+        long={props.long}
+        setVisibility={setPopupToOpen}
       />
       <div
         style={{
@@ -75,10 +118,10 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
           
 
           <div className="">
-            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), popupCloseHandler(true) }}>Drainage Area</button>
+            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), drainagePopupCloseHandler(true) }}>Drainage Area</button>
           </div>
           <div className="">
-            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('2') }}>Raindrop tool</button>
+            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('2'), downstreamPopupCloseHandler(true) }}>Downstream flow path</button>
           </div>
           <div className="">
             <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('3') }}>Other tool</button>
