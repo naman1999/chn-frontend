@@ -43,15 +43,16 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
     setDownstreamPopUpVisibility(e);
   };
 
-  //const to remember the popup option to open after map click
+  //const to remember the popup option to open after map click and if you need to open it on map clicked
   var popupToOpen: string;
   var readyToOpen: boolean = false;
 
+  //the popup that was just closed is going to open on next map click
   const setPopupToOpen = (id:string) => {
-    console.log("setPopupToOpen, id - " + id);
     popupToOpen = id;
     readyToOpen =true;
   }
+
   //function to open or close the different popup options
   const openPopupOption = (lnglat:string[]) => {
     if(readyToOpen){
@@ -69,11 +70,6 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
   useEffect(() => {
     setShowToolbox(props.show);
   }, [props.show]);
-
-  const logFuntion = (e:string) => {
-    console.log(e);
-  }
-
   
   return (
     <div>
@@ -115,24 +111,22 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
               &times;
             </div>
           </div>
-          
 
           <div className="">
             <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), drainagePopupCloseHandler(true) }}>Drainage Area</button>
           </div>
           <div className="">
-            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('2'), downstreamPopupCloseHandler(true) }}>Downstream flow path</button>
+            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), downstreamPopupCloseHandler(true) }}>Downstream flow path</button>
           </div>
           <div className="">
-            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('3') }}>Other tool</button>
+            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('option 3') }}>Upstream</button>
           </div>
           <div className="">
-            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('4') }}>Last tool</button>
+            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('option 4') }}>Distance</button>
           </div>
         </div>
       </div>
     </div>
-
   );
 };
 

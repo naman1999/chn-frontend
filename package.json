@@ -2,7 +2,7 @@
   "homepage": "https://sacha-rncan.github.io/hydronetwork",
   "name": "hydronetwork",
   "version": "0.1.1",
-  "description": "A project that uses GeoView to showcase the use of Climate Engine",
+  "description": "A project that uses GeoView to display the Canadian Hydronetwork",
   "main": "src/index.tsx",
   "private": true,
   "license": "MIT",

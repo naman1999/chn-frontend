@@ -5,7 +5,7 @@ const package = require('./package.json');
 
 // get version numbers
 const [major, minor, patch] = package.version.split('.');
-console.log(`Build CE Demo Project: ${major}.${minor}.${patch}`);
+console.log(`Build Canadian Hydronetwork Project: ${major}.${minor}.${patch}`);
 
 const config = {
   entry: {
@@ -57,7 +57,7 @@ const config = {
     new HtmlWebpackPlugin({
       template: './index.html',
       filename: 'index.html',
-      title: 'GeoView Climate Engine Demo',
+      title: 'GeoView - Canadian Hydronetwork',
     }),
     new CopyWebpackPlugin({
       patterns: [

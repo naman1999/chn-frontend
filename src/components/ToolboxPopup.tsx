@@ -23,9 +23,6 @@ interface ToolboxPopupProps {
   setVisibility: Function;
 }
 
-
-var waitForMapClick = false;
-
 export const ToolboxPopup = (props: ToolboxPopupProps): JSX.Element => {
   const [show, setShow] = useState(false);
 
@@ -36,30 +33,6 @@ export const ToolboxPopup = (props: ToolboxPopupProps): JSX.Element => {
   useEffect(() => {
     setShow(props.show);
   }, [props.show]);
-
-  //quand on clique sur la carte, si on attend un clique (on doit être passé par le popup), ouvre le popup et appel la fonction waterdrop
-  //cgpv.api.event.on((cgpv.api.eventNames.MAP as any).EVENT_MAP_SINGLE_CLICK, (payload) => { popupMapClick((payload as any).coordinates.lnglat) }, 'mapWM');
-
-  function popupMapClick(lnglat:string[]){
-    if(waitForMapClick){
-      console.log('setshow(true) -> title: ' + props.title);
-      getCoordinates(lnglat);
-      setShow(true);
-    }
-  }
-
-  //when the select point on map button is clicked, hide the popup and ready for map click.
-  function getCoordinates(lnglat:any) {
-    if (waitForMapClick) {
-      console.log('get coordinates -> title: ' + props.title);
-      props.setLat(lnglat[1]);
-      props.setLong(lnglat[0]);
-      waitForMapClick = false;
-    } else {
-      setShow(false);
-      waitForMapClick = true;
-    }
-  }
 
   return (
     <div
@@ -88,11 +61,10 @@ export const ToolboxPopup = (props: ToolboxPopupProps): JSX.Element => {
             <input type="number" id="lat" value={props.lat} onChange={(e) => props.setLat(e.target.value)}></input>
           </div>
           <div className="">
-            <button type="button" className='button-4' onClick={/*getCoordinates*/()=>{closeHandler(this), props.setVisibility(props.id)}}>Sélectionner un point sur la carte</button>
-            <button type="button" className="button-3 margin-left-10" onClick={()=>{closeHandler(this), props.mainFunction(props.long, props.lat, cgpv.api.map('mapWM').currentProjection), console.log("go button pressed at: "+props.title)}}>Go</button>
+            <button type="button" className='button-4' onClick={()=>{closeHandler(this), props.setVisibility(props.id)}}>Sélectionner un point sur la carte</button>
+            <button type="button" className="button-3 margin-left-10" onClick={()=>{closeHandler(this), props.mainFunction(props.long, props.lat, cgpv.api.map('mapWM').currentProjection)}}>Go</button>
           </div>
         </div>
-        
       </div>
     </div>
   );
