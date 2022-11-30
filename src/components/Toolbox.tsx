@@ -106,12 +106,14 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
       >
         <div className={'popup'}>
           <div className="toolbox-title margin-left-10">
-            <h3 className="line">{props.title}</h3>
+            <h3 className="line"><img src="/assets/ToolBoxLogo.svg" className="svg-toolbox margin-right-5 margin-bot-5"/>{props.title}</h3>
             <div className={'close'} onClick={closeToolboxHandler}>
               &times;
             </div>
           </div>
-
+          <div className="toolbox-group margin-left-10">
+            General
+          </div>
           <div className="">
             <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), drainagePopupCloseHandler(true) }}>
               <i className="fa fa-tint" aria-hidden="true"></i>
@@ -124,21 +126,38 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
               Downstream flow path</button>
           </div>
           <div className="">
-            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('option 3') }}>
-              <i className="fa fa-mountain"></i>
-              Upstream
+            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this)}}>
+              <i className="fa fa-line-chart"></i>
+              Elevation Profile Tool
+            </button>
+          </div>
+          <div className="toolbox-group margin-left-10">
+            Network Navigation
+          </div>
+          <div className="">
+            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this) }}>
+              <i className="fa fa-tint"></i>
+              Flow (Raindrop) Tool
             </button>
           </div>
           <div className="">
-            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('option 4') }}>
-              <i className="fa fa-arrows-h"></i>
-              Distance
+            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this) }}>
+              <i className="fa fa-share-alt"></i>
+              Network Path
             </button>
           </div>
           <div className="">
-            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this), console.log('option 5') }}>
-              <i className="fa fa-arrows-h"></i>
-              Network path
+            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this) }}>
+              <i className="fa fa-sitemap"></i>
+              Network Trace
+            </button>
+          </div>
+          <div className="toolbox-group margin-left-10">
+            Others
+          </div>
+          <div className="">
+            <button type="button" className="toolbox-options margin-left-10 margin-bot-5" onClick={() => { closeToolboxHandler(this) }}>
+              PROSPER Tool
             </button>
           </div>
         </div>
