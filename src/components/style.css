@@ -15,17 +15,22 @@
   margin: 70px auto;
   padding: 20px;
   background: #fff;
-  border-radius: 5px;
+  border-radius: 2px;
   width: 30%;
   position: relative;
   transition: all 5s ease-in-out;
 }
-  
-.popup h2 {
-    margin-top: 0;
-    color: #333;
-    font-family: Tahoma, Arial, sans-serif;
+
+.popup.popup-option {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 2px;
+  width: 50% !important;
+  position: relative;
+  transition: all 5s ease-in-out;
 }
+
 .popup .close {
   position: absolute;
   top: 20px;
@@ -54,9 +59,9 @@
 /****************************************************** CSS BUTTONS *******************************************************/
 .button-4 {
   appearance: none;
-  background-color: #FAFBFC;
-  border: 1px solid rgba(27, 31, 35, 0.15);
-  border-radius: 6px;
+  background-color: #e0e3e6;
+  border: 0px solid rgba(27, 31, 35, 0.15);
+  border-radius: 2px;
   box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
   box-sizing: border-box;
   color: #24292E;
@@ -79,7 +84,7 @@
 }
 
 .button-4:hover {
-  background-color: #F3F4F6;
+  background-color: #ebedef;
   text-decoration: none;
   transition-duration: 0.1s;
 }
@@ -113,7 +118,7 @@
   appearance: none;
   background-color: #2ea44f;
   border: 1px solid rgba(27, 31, 35, .15);
-  border-radius: 6px;
+  border-radius: 2px;
   box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
   box-sizing: border-box;
   color: #fff;
@@ -123,7 +128,7 @@
   font-size: 12px;
   font-weight: 500;
   line-height: 20px;
-  padding: 6px 16px;
+  padding: 6px 40px;
   position: relative;
   text-align: center;
   text-decoration: none;
@@ -181,6 +186,10 @@
   height: 20px;
 }
 
+.fa-bold{
+  -webkit-text-stroke: 1px black;
+}
+
 .toolbox-options {
   border: none;
   background-color: #0f8aff;
@@ -211,17 +220,26 @@
   margin: 5px auto!important;
 }
 
-.toolbox-popup-content{
+.toolbox-popup-wrapper{
   width: 90%;
-  align-content: center;
-  display: block;
-  margin: 5px auto!important;
+  margin: 5px 30px;
+  padding: 20px;
+  padding-bottom: 40px;
+  margin-bottom: 20px;
+  background-color: #ebf0f5;
+  border: 1px solid transparent;
+  border-color: #ddd;
 }
 
-.toolbox-button {
-  position: relative;
-  top:20px;
-  left:20px;
+.toolbox-popup-content{
+  display: flex;
+  align-content: center;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.toolbox-actions{
+  text-align: center;
 }
 
 /****************************************************** CSS OTHERS *******************************************************/
