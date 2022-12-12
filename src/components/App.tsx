@@ -13,8 +13,9 @@ import {
   TypeWindow,
 } from 'geoview-core-types';
 
-import"./style.css"
+import "./style.css"
 import { Toolbox } from './Toolbox';
+import react from 'react';
 
 // get reference to window object
 const w = window as TypeWindow;
@@ -44,6 +45,8 @@ const App = (): JSX.Element => {
   const [toolboxVisibility, setToolboxVisibility] = useState(false);
   const [long, setLong] = useState("");
   const [lat, setLat] = useState("");
+  const [endLong, setEndLong] = useState("");
+  const [endLat, setEndLat] = useState("");
 
   const toolboxButton: TypeIconButtonProps = {
     // set ID to toolboxButtonPanel so that it can be accessed from the core viewer
@@ -52,10 +55,10 @@ const App = (): JSX.Element => {
     tooltipPlacement: 'right',
     children: <img src="/assets/ToolBoxLogo.svg" className="svg-toolbox" />,
     visible: true,
-    onClick: ()=>toolboxCloseHandler(true),
+    onClick: () => toolboxCloseHandler(true),
   };
 
-  const toolboxCloseHandler = (e:boolean) => {
+  const toolboxCloseHandler = (e: boolean) => {
     setToolboxVisibility(e);
   };
 
@@ -91,11 +94,11 @@ const App = (): JSX.Element => {
         false,
       );
 
-      const language = 'en';
+      const language = 'fr';
 
       const LayerIcon = cgpv.ui.elements.LayersIcon;
 
-      
+      /*
       // pannel - layer button props
       const layerButton: TypeIconButtonProps = {
         // set ID to layerButtonPanel so that it can be accessed from the core viewer
@@ -117,26 +120,49 @@ const App = (): JSX.Element => {
       const layerButtonPanel = cgpv.api
         .map('mapWM')
         .appBarButtons.createAppbarPanel(layerButton, layerPanel, null);
-      
-        layerButtonPanel?.panel?.changeContent(
+
+      layerButtonPanel?.panel?.changeContent(
         <LayerPanelContent buttonPanel={layerButtonPanel} mapId={'mapWM'} />,
-      );
+      );*/
+
+      //set up the Legend in a panel
+      const legend = (cgpv.api.map('mapWM') as any).legend.createLegend();
+      const button: TypeIconButtonProps = {
+        id: 'AppbarPanelButtonId',
+        tooltip: 'Legend',
+        tooltipPlacement: 'right',
+        children: <LayerIcon />,
+      };
+
+      const panel: TypePanelProps = {
+        title: 'Legend',
+        icon: <LayerIcon />,
+        content: react.createElement(legend),
+        width: 200,
+      };
+
+      // call an api function to add a panel with a button in the default group
+      cgpv.api.map('mapWM').appBarButtons.createAppbarPanel(button, panel, null);
 
       //add toolbox button in the navbar
       cgpv.api.map('mapWM').navBarButtons.createNavbarButtonGroup('mygroup');
       cgpv.api.map('mapWM').navBarButtons.createNavbarButton(toolboxButton, 'mygroup');
-      
+
       //add logo next to sidebar
       var nhn_icon = document.createElement('img');
       nhn_icon.src = './nhn-logo.png';
       nhn_icon.classList.add('nhn-icon');
       document.getElementById("map-mapWM")?.appendChild(nhn_icon);
+
+      window.onclick = e => {
+        console.log(e.target);  // to get the element
+      }
     });
   }, []);
 
   return (
     <div>
-    <div id="loader"></div>
+      <div id="loader"></div>
       <Toolbox
         onClose={toolboxCloseHandler}
         show={toolboxVisibility}
@@ -145,16 +171,20 @@ const App = (): JSX.Element => {
         setLong={setLong}
         lat={lat}
         long={long}
+        setEndLat={setEndLat}
+        setEndLong={setEndLong}
+        endLat={endLat}
+        endLong={endLong}
       />
       <div
-    id="mapWM"
-    className={`llwp-map ${classes.container}`}
-    style={{
-      height: '100vh',
-      zIndex: 0,
-    }}
-    data-lang="en"
-    data-config="{
+        id="mapWM"
+        className={`llwp-map ${classes.container}`}
+        style={{
+          height: '100vh',
+          zIndex: 0,
+        }}
+        data-lang="en"
+        data-config="{
       'map': {
         'interaction': 'dynamic',
         'viewSettings': {
@@ -223,14 +253,18 @@ const App = (): JSX.Element => {
       },
       'theme': 'dark',
       'suportedLanguages': ['en', 'fr'],
+      'components': [
+        'app-bar',
+        'nav-bar'
+      ],
       'corePackages': ['basemap-panel']
       }"
-  >
-    
-  </div>
-  
-  </div>
-    
+      >
+
+      </div>
+
+    </div>
+
   );
 };
 

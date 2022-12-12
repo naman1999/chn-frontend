@@ -1,6 +1,7 @@
 import axios from 'axios';
+const mapId = 'mapWM';
+
 export async function getCachement(long, lat, projection) {
-  const mapId = 'mapWM';
   //activate loader icon
   document.getElementById('loader').style.visibility = "visible";;
 
@@ -44,6 +45,7 @@ export async function getCachement(long, lat, projection) {
 }
 
 export async function testGetCachement(long, lat, projection) {
+  console.log('testGetCachement');
   const mapId = 'mapWM';
   const defaultId = cgpv.api.map(mapId).layer.vector?.defaultGeometryGroupId;
   //activate loader icon
@@ -52,11 +54,14 @@ export async function testGetCachement(long, lat, projection) {
   const data = await fetch("./exampleSmall.json");
   const response = await data.json();
   
-  //clear geometries from default group 
-  cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
+  //clear geometries from default group
+  //----------------------------------- Ligne qui ne foncitonne pas ----------------------------------------------------
+  //cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
 
   //add the geometries to the default group
   if (response.data[0].row_to_json.features[0].geometry.type == 'Polygon') {
+    //addLayer(response.data[0].row_to_json);
+    //addLayer('exampleSmall.js');
     const geom = cgpv.api.map(mapId).layer.vector?.addPolygon(
       response.data[0].row_to_json.features[0].geometry.coordinates, {
         style: {
@@ -117,7 +122,28 @@ export async function getDownstream(long, lat, projection) {
       }
     })
     .catch(function (error) {
+      document.getElementById('loader').style.visibility = "hidden";
       console.log(error);
     })
 }
 
+function addLayer(geoJson){
+  console.log(geoJson);
+  const layerID = cgpv.api.map(mapId).layer.addGeoviewLayer(
+    {
+      'geoviewLayerId': 'geoJsonSample',
+      'geoviewLayerName': {
+        'en': 'geojson sample',
+        'fr': 'exemple geojson'
+      },
+      'geoviewLayerType': 'GeoJSON',
+      'metadataAccessPath': './geojson/metadata.json',
+      'listOfLayerEntryConfig': [
+        {
+          'layerId': 'exampleSmall.json'
+        }
+      ]
+    },
+    ['en', 'fr']
+  );
+}

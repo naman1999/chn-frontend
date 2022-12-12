@@ -18,7 +18,6 @@
   border-radius: 2px;
   width: 30%;
   position: relative;
-  transition: all 5s ease-in-out;
 }
 
 .popup.popup-option {
@@ -26,16 +25,14 @@
   padding: 20px;
   background: #fff;
   border-radius: 2px;
-  width: 50% !important;
+  width: 55% !important;
   position: relative;
-  transition: all 5s ease-in-out;
 }
 
 .popup .close {
   position: absolute;
   top: 20px;
   right: 30px;
-  transition: all 200ms;
   font-size: 30px;
   font-weight: bold;
   text-decoration: none;
@@ -240,6 +237,17 @@
 
 .toolbox-actions{
   text-align: center;
+}
+
+.distance-input{
+  width: 50px;
+}
+
+.toolboxCheckboxInput {
+  vertical-align: middle;
+  width:16px;
+  height:16px;
+  margin-top: 0px!important;
 }
 
 /****************************************************** CSS OTHERS *******************************************************/

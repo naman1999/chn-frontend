@@ -47,7 +47,7 @@ export const LayerPanelContent = (props: LayerPanelContentProps): JSX.Element =>
   for (let key in layersArray) {
     (cgpv.api.map(mapId).layer as any).geoviewLayers[key]?.setVisible(false)
     layerList.push(
-      <div>
+      <div key={key}>
         <input className='pannelCheckboxInput' type="checkbox" key={key} onChange={e=>updateLayer(e, key)} defaultChecked={(cgpv.api.map(mapId).layer as any).geoviewLayers[key]?.getVisible()} /><label key={key} className='pannelLabel'>Couche {key}</label>
       </div>
     );

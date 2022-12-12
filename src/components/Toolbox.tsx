@@ -20,6 +20,10 @@ interface ToolboxProps {
   setLong: React.Dispatch<React.SetStateAction<string>>;
   long: string;
   lat: string;
+  setEndLat: React.Dispatch<React.SetStateAction<string>>;
+  setEndLong: React.Dispatch<React.SetStateAction<string>>;
+  endLong: string;
+  endLat: string;
 }
 
 export const Toolbox = (props: ToolboxProps): JSX.Element => {
@@ -55,17 +59,40 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
 
   //function to open or close the different popup options
   const openPopupOption = (lnglat:string[]) => {
+    console.log("openPopupOption: ready to open -> "+ readyToOpen+" id -> "+ popupToOpen);
     if(readyToOpen){
-      props.setLat(lnglat[1]);
-      props.setLong(lnglat[0]);
-      if(popupToOpen == "drainage") {setPopUpVisibility(true);}
-      else if(popupToOpen == "downstream") {setDownstreamPopUpVisibility(true);}
+      //set long lat of begining or endpoint
+      if(popupToOpen.indexOf('endPoint')){
+        console.log("set end");
+        props.setEndLat(lnglat[1]);
+        props.setEndLong(lnglat[0]);
+      }
+      else{
+        console.log("set begining");
+        props.setLat(lnglat[1]);
+        props.setLong(lnglat[0]);
+      }
+      //re-open the popup
+      if(popupToOpen.indexOf('drainage') != -1) {setPopUpVisibility(true);}
+      else if(popupToOpen.indexOf('downstream') != -1) {setDownstreamPopUpVisibility(true);}
       readyToOpen = false;
     }
   }
 
   //call openPopupOption on map click
   cgpv.api.event.on((cgpv.api.eventNames.MAP as any).EVENT_MAP_SINGLE_CLICK, (payload) => { openPopupOption((payload as any).coordinates.lnglat) }, 'mapWM');
+
+  // set up the long lat props
+  var longLat = {
+    setLat: props.setLat,
+    setLong: props.setLong,
+    long: props.long,
+    lat: props.lat,
+    setEndLat: props.setEndLat,
+    setEndLong: props.setEndLong,
+    endLong: props.endLong,
+    endLat: props.endLat,
+  }
 
   useEffect(() => {
     setShowToolbox(props.show);
@@ -79,10 +106,9 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
         mainFunction={getCachement}
         show={popupVisibility}
         title="Tool Box - drainage area"
-        setLat={props.setLat}
-        setLong={props.setLong}
-        lat={props.lat}
-        long={props.long}
+        distanceOption={false}
+        endPointOption={false}
+        longLat={longLat}
         setVisibility={setPopupToOpen}
       />
       <ToolboxPopup
@@ -91,10 +117,9 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
         mainFunction={testGetCachement}
         show={downstreamPopupVisibility}
         title="Tool Box - downstream flow path"
-        setLat={props.setLat}
-        setLong={props.setLong}
-        lat={props.lat}
-        long={props.long}
+        distanceOption={false}
+        endPointOption={false}
+        longLat={longLat}
         setVisibility={setPopupToOpen}
       />
       <div
