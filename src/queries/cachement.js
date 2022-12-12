@@ -2,6 +2,7 @@ import axios from 'axios';
 const mapId = 'mapWM';
 
 export async function getCachement(long, lat, projection) {
+  var mapId = 'mapWM';
   //activate loader icon
   document.getElementById('loader').style.visibility = "visible";;
 
@@ -24,6 +25,7 @@ export async function getCachement(long, lat, projection) {
         );
       }
       else {
+        cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
         for (const element of response.data[0].row_to_json.features[0].geometry.coordinates) {
           const geom = cgpv.api.map(mapId).layer.vector?.addPolygon(
             element, {
@@ -88,15 +90,20 @@ export async function testGetCachement(long, lat, projection) {
   document.getElementById('loader').style.visibility = "hidden";
 }
 
+
 export async function getDownstream(long, lat, projection) {
-  const mapId = 'mapWM';
+  var mapId = 'mapWM';
+  //activate loader icon
+  document.getElementById('loader').style.visibility = "visible";;
+
+  const defaultId = cgpv.api.map(mapId).layer.vector?.defaultGeometryGroupId;
   console.log(long + " " + lat + " " + projection)
   axios.get('http://localhost:3000/users/downstream/' + long + '/' + lat + '/' + projection)
     .then(function (response) {
       console.log(response);
-      const defaultId = cgpv.api.map(mapId).layer.vector?.defaultGeometryGroupId;
-      cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
-      if (response.data[0].row_to_json.features[0].geometry.type == 'Polygon') {
+      //cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
+      if (response.data[0].row_to_json.features[0].geometry.type == 'MultiLineString') {
+        cgpv.api.map(mapId).layer.vector?.deleteGeometry(geom);
         const geom = cgpv.api.map(mapId).layer.vector?.addPolygon(
           response.data[0].row_to_json.features[0].geometry.coordinates, {
           style: {
@@ -108,6 +115,7 @@ export async function getDownstream(long, lat, projection) {
         );
       }
       else {
+        cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
         for (const element of response.data[0].row_to_json.features[0].geometry.coordinates) {
           const geom = cgpv.api.map(mapId).layer.vector?.addPolygon(
             element, {
@@ -120,6 +128,7 @@ export async function getDownstream(long, lat, projection) {
           );
         };
       }
+      document.getElementById('loader').style.visibility = "hidden";;
     })
     .catch(function (error) {
       document.getElementById('loader').style.visibility = "hidden";
