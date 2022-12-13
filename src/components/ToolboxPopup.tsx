@@ -68,7 +68,7 @@ export const ToolboxPopup = (props: ToolboxPopupProps): JSX.Element => {
           <div className="toolbox-popup-content">
             {/* Départ */}
             <div>
-              <div className={'content margin-bot-20'}><b>Position de départ:</b></div>
+              <div className={'content margin-bot-20'}><b>Start Point:</b></div>
               <div>
                 <label className="width-80">Longitude:</label>
                 <input type="number" className="margin-bot-5" id="long" value={props.longLat.long} onChange={(e) => props.longLat.setLong(e.target.value)}></input>
@@ -79,7 +79,7 @@ export const ToolboxPopup = (props: ToolboxPopupProps): JSX.Element => {
               </div>
               <div className="toolbox-actions">
                 <button type="button" className='button-4' onClick={() => { closeHandler(this), props.setVisibility(props.id) }}>
-                  <i className="fa fa-map-marker"></i>Sélectionner un point sur la carte
+                  <i className="fa fa-map-marker"></i>Select Point On Map
                 </button>
               </div>
             </div>
@@ -99,7 +99,7 @@ export const ToolboxPopup = (props: ToolboxPopupProps): JSX.Element => {
             {/* Fin */}
             {props.endPointOption &&
               <div>
-                <div className={'content margin-bot-20'}><b>Position de fin:</b></div>
+                <div className={'content margin-bot-20'}><b>End Position:</b></div>
                 <div>
                   <label className="width-80">Longitude:</label>
                   <input type="number" className="margin-bot-5" id="endlong" value={props.longLat.endLong} onChange={(e) => props.longLat.setEndLong(e.target.value)}></input>
@@ -110,7 +110,7 @@ export const ToolboxPopup = (props: ToolboxPopupProps): JSX.Element => {
                 </div>
                 <div className="toolbox-actions">
                   <button type="button" className='button-4' onClick={() => { closeHandler(this), props.setVisibility(props.id+'endPoint') }}>
-                    <i className="fa fa-map-marker"></i>Sélectionner un point sur la carte
+                    <i className="fa fa-map-marker"></i>Select Point On Map
                   </button>
                 </div>
               </div>

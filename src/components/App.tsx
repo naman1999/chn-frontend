@@ -103,7 +103,7 @@ const App = (): JSX.Element => {
       const layerButton: TypeIconButtonProps = {
         // set ID to layerButtonPanel so that it can be accessed from the core viewer
         id: 'layerButtonPanel',
-        tooltip: translations[language].custom.cePanelTitle,
+        tooltip: translations[language].custom.layerPanelTitle,
         tooltipPlacement: 'right',
         children: <LayerIcon />,
         visible: true,
@@ -111,7 +111,7 @@ const App = (): JSX.Element => {
 
       // layer panel props
       const layerPanel: TypePanelProps = {
-        title: translations[language].custom.cePanelTitle,
+        title: translations[language].custom.layerPanelTitle,
         icon: <LayerIcon />,
         width: 500,
       };
