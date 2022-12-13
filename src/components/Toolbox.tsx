@@ -59,16 +59,13 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
 
   //function to open or close the different popup options
   const openPopupOption = (lnglat:string[]) => {
-    console.log("openPopupOption: ready to open -> "+ readyToOpen+" id -> "+ popupToOpen);
     if(readyToOpen){
       //set long lat of begining or endpoint
       if(popupToOpen.indexOf('endPoint')!= -1){
-        console.log("set end");
         props.setEndLat(lnglat[1]);
         props.setEndLong(lnglat[0]);
       }
       else{
-        console.log("set begining");
         props.setLat(lnglat[1]);
         props.setLong(lnglat[0]);
       }

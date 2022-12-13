@@ -154,9 +154,9 @@ const App = (): JSX.Element => {
       nhn_icon.classList.add('nhn-icon');
       document.getElementById("map-mapWM")?.appendChild(nhn_icon);
 
-      window.onclick = e => {
+      /*window.onclick = e => {
         console.log(e.target);  // to get the element
-      }
+      }*/
     });
   }, []);
 
