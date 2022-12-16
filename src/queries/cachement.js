@@ -25,7 +25,7 @@ export async function getCachement(long, lat, projection) {
         );
       }
       else {
-        cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
+        // cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
         for (const element of response.data[0].row_to_json.features[0].geometry.coordinates) {
           const geom = cgpv.api.map(mapId).layer.vector?.addPolygon(
             element, {
@@ -115,7 +115,7 @@ export async function getDownstream(long, lat, projection) {
         );
       }
       else {
-        cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
+        // cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
         for (const element of response.data[0].row_to_json.features[0].geometry.coordinates) {
           const geom = cgpv.api.map(mapId).layer.vector?.addPolygon(
             element, {
