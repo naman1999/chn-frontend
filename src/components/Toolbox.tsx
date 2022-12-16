@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import "./style.css"
 import { TypeIconButtonProps, TypeWindow } from "geoview-core-types";
-import { ToolboxPopup } from "./ToolboxPopup";
+import { ToolboxOption } from "./ToolboxOption";
 import { getCachement, testGetCachement, getDownstream } from "../queries/cachement";
 
 const w = window as TypeWindow;
@@ -16,20 +16,18 @@ interface ToolboxProps {
   onClose: (close: boolean) => void;
   show: boolean;
   title: string;
-  setLat: React.Dispatch<React.SetStateAction<string>>;
-  setLong: React.Dispatch<React.SetStateAction<string>>;
-  long: string;
-  lat: string;
-  setEndLat: React.Dispatch<React.SetStateAction<string>>;
-  setEndLong: React.Dispatch<React.SetStateAction<string>>;
-  endLong: string;
-  endLat: string;
 }
 
 export const Toolbox = (props: ToolboxProps): JSX.Element => {
   const [showToolbox, setShowToolbox] = useState(false);
   const [popupVisibility, setPopUpVisibility] = useState(false);
   const [downstreamPopupVisibility, setDownstreamPopUpVisibility] = useState(false);
+
+  
+  const [long, setLong] = useState("");
+  const [lat, setLat] = useState("");
+  const [endLong, setEndLong] = useState("");
+  const [endLat, setEndLat] = useState("");
 
   //function to close the toolbox
   const closeToolboxHandler = (e: any) => {
@@ -62,12 +60,12 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
     if(readyToOpen){
       //set long lat of begining or endpoint
       if(popupToOpen.indexOf('endPoint')!= -1){
-        props.setEndLat(lnglat[1]);
-        props.setEndLong(lnglat[0]);
+        setEndLat(lnglat[1]);
+        setEndLong(lnglat[0]);
       }
       else{
-        props.setLat(lnglat[1]);
-        props.setLong(lnglat[0]);
+        setLat(lnglat[1]);
+        setLong(lnglat[0]);
       }
       //re-open the popup
       if(popupToOpen.indexOf('drainage') != -1) {setPopUpVisibility(true);}
@@ -81,14 +79,14 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
 
   // set up the long lat props
   var longLat = {
-    setLat: props.setLat,
-    setLong: props.setLong,
-    long: props.long,
-    lat: props.lat,
-    setEndLat: props.setEndLat,
-    setEndLong: props.setEndLong,
-    endLong: props.endLong,
-    endLat: props.endLat,
+    setLat: setLat,
+    setLong: setLong,
+    long: long,
+    lat: lat,
+    setEndLat: setEndLat,
+    setEndLong: setEndLong,
+    endLong: endLong,
+    endLat: endLat,
   }
 
   useEffect(() => {
@@ -97,7 +95,7 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
   
   return (
     <div>
-      <ToolboxPopup
+      <ToolboxOption
         id="drainage"
         onClose={drainagePopupCloseHandler}
         mainFunction={getCachement}
@@ -108,7 +106,7 @@ export const Toolbox = (props: ToolboxProps): JSX.Element => {
         longLat={longLat}
         setVisibility={setPopupToOpen}
       />
-      <ToolboxPopup
+      <ToolboxOption
         id="downstream"
         onClose={downstreamPopupCloseHandler}
         mainFunction={getDownstream}

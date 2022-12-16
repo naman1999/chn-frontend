@@ -10,7 +10,7 @@ const cgpv = w['cgpv'];
 const { react } = cgpv;
 
 
-interface ToolboxPopupProps {
+interface ToolboxOptionProps {
   id: string;
   onClose: (close: boolean) => void;
   mainFunction: Function;
@@ -31,7 +31,7 @@ interface ToolboxPopupProps {
   setVisibility: Function;
 }
 
-export const ToolboxPopup = (props: ToolboxPopupProps): JSX.Element => {
+export const ToolboxOption = (props: ToolboxOptionProps): JSX.Element => {
   const [show, setShow] = useState(false);
 
   const closeHandler = (e: any) => {
@@ -41,6 +41,22 @@ export const ToolboxPopup = (props: ToolboxPopupProps): JSX.Element => {
 
   var limitChecked:boolean=false;
   var distance:number=10;
+
+  function updatedFunctionCall(){
+    var projection = cgpv.api.map('mapWM').currentProjection
+    if(!props.distanceOption && !props.endPointOption){//just start point
+      props.mainFunction(props.longLat.long, props.longLat.lat, projection);
+    }
+    else if(props.distanceOption && !props.endPointOption){//start point and distance
+      props.mainFunction(props.longLat.long, props.longLat.lat, projection, distance);
+    }
+    else if(!props.distanceOption && props.endPointOption){//start pont and endpoint
+      props.mainFunction(props.longLat.long, props.longLat.lat, projection, props.longLat.endLat, props.longLat.endLong)
+    }
+    else {//start point, endpoint, distance
+      props.mainFunction(props.longLat.long, props.longLat.lat, projection, props.longLat.endLat, props.longLat.endLong, distance)
+    }
+  }
 
   useEffect(() => {
     setShow(props.show);
@@ -132,7 +148,7 @@ export const ToolboxPopup = (props: ToolboxPopupProps): JSX.Element => {
   );
 };
 
-ToolboxPopup.propTypes = {
+ToolboxOption.propTypes = {
   title: PropTypes.string.isRequired,
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired
