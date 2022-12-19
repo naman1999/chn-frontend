@@ -43,10 +43,6 @@ const App = (): JSX.Element => {
   const classes = useStyles();
 
   const [toolboxVisibility, setToolboxVisibility] = useState(false);
-  const [long, setLong] = useState("");
-  const [lat, setLat] = useState("");
-  const [endLong, setEndLong] = useState("");
-  const [endLat, setEndLat] = useState("");
 
   const toolboxButton: TypeIconButtonProps = {
     // set ID to toolboxButtonPanel so that it can be accessed from the core viewer
@@ -99,7 +95,6 @@ const App = (): JSX.Element => {
       const LayerIcon = cgpv.ui.elements.LayersIcon;
 
       /*
-      // pannel - layer button props
       const layerButton: TypeIconButtonProps = {
         // set ID to layerButtonPanel so that it can be accessed from the core viewer
         id: 'layerButtonPanel',
@@ -108,22 +103,7 @@ const App = (): JSX.Element => {
         children: <LayerIcon />,
         visible: true,
       };
-
-      // layer panel props
-      const layerPanel: TypePanelProps = {
-        title: translations[language].custom.layerPanelTitle,
-        icon: <LayerIcon />,
-        width: 500,
-      };
-
-      // create a new button panel on the appbar
-      const layerButtonPanel = cgpv.api
-        .map('mapWM')
-        .appBarButtons.createAppbarPanel(layerButton, layerPanel, null);
-
-      layerButtonPanel?.panel?.changeContent(
-        <LayerPanelContent buttonPanel={layerButtonPanel} mapId={'mapWM'} />,
-      );*/
+      */
 
       //set up the Legend in a panel
       const legend = (cgpv.api.map('mapWM') as any).legend.createLegend();
@@ -153,10 +133,6 @@ const App = (): JSX.Element => {
       nhn_icon.src = './nhn-logo.png';
       nhn_icon.classList.add('nhn-icon');
       document.getElementById("map-mapWM")?.appendChild(nhn_icon);
-
-      /*window.onclick = e => {
-        console.log(e.target);  // to get the element
-      }*/
     });
   }, []);
 
@@ -167,14 +143,6 @@ const App = (): JSX.Element => {
         onClose={toolboxCloseHandler}
         show={toolboxVisibility}
         title="Tool Box"
-        setLat={setLat}
-        setLong={setLong}
-        lat={lat}
-        long={long}
-        setEndLat={setEndLat}
-        setEndLong={setEndLong}
-        endLat={endLat}
-        endLong={endLong}
       />
       <div
         id="mapWM"
