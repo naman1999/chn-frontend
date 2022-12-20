@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import makeStyles from '@mui/styles/makeStyles';
 
-import { LayerPanelContent } from './LayerPanelContent';
+// import { LayerPanelContent } from './LayerPanelContent';
 
 import translationEn from '../../public/locales/en/translation.json';
 import translationFr from '../../public/locales/fr/translation.json';

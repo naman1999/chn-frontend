@@ -91,7 +91,6 @@ export async function testGetCachement(long, lat, projection) {
   document.getElementById('loader').style.visibility = "hidden";
 }
 
-
 export async function getDownstream(long, lat, projection) {
   var mapId = 'mapWM';
   //activate loader icon
@@ -99,14 +98,14 @@ export async function getDownstream(long, lat, projection) {
 
   const defaultId = cgpv.api.map(mapId).layer.vector?.defaultGeometryGroupId;
   console.log(long + " " + lat + " " + projection)
-  axios.get('http://localhost:3000/users/downstream/' + long + '/' + lat + '/' + projection)
+  axios.get('http://localhost:3000/downstream/segment/' + long + '/' + lat + '/' + projection)
     .then(function (response) {
       console.log(response);
       //cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
-      if (response.data[0].row_to_json.features[0].geometry.type == 'MultiLineString') {
+      if (response.data.features[0].geometry.type == 'MultiLineString') {
         cgpv.api.map(mapId).layer.vector?.deleteGeometry(geom);
         const geom = cgpv.api.map(mapId).layer.vector?.addPolygon(
-          response.data[0].row_to_json.features[0].geometry.coordinates, {
+          response.data.features[0].geometry.coordinates, {
           style: {
             strokeColor: '#3d85c6',
             strokeWidth: 5,
@@ -117,7 +116,7 @@ export async function getDownstream(long, lat, projection) {
       }
       else {
         // cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
-        for (const element of response.data[0].row_to_json.features[0].geometry.coordinates) {
+        for (const element of response.data.features[0].geometry.coordinates) {
           const geom = cgpv.api.map(mapId).layer.vector?.addPolygon(
             element, {
             style: {
@@ -136,6 +135,51 @@ export async function getDownstream(long, lat, projection) {
       console.log(error);
     })
 }
+
+// export async function getDownstreamOLD(long, lat, projection) {
+//   var mapId = 'mapWM';
+//   //activate loader icon
+//   document.getElementById('loader').style.visibility = "visible";;
+
+//   const defaultId = cgpv.api.map(mapId).layer.vector?.defaultGeometryGroupId;
+//   console.log(long + " " + lat + " " + projection)
+//   axios.get('http://localhost:3000/users/downstream/' + long + '/' + lat + '/' + projection)
+//     .then(function (response) {
+//       console.log(response);
+//       //cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
+//       if (response.data[0].row_to_json.features[0].geometry.type == 'MultiLineString') {
+//         cgpv.api.map(mapId).layer.vector?.deleteGeometry(geom);
+//         const geom = cgpv.api.map(mapId).layer.vector?.addPolygon(
+//           response.data[0].row_to_json.features[0].geometry.coordinates, {
+//           style: {
+//             strokeColor: '#3d85c6',
+//             strokeWidth: 5,
+//             strokeOpacity: 1,
+//           },
+//         }
+//         );
+//       }
+//       else {
+//         // cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
+//         for (const element of response.data[0].row_to_json.features[0].geometry.coordinates) {
+//           const geom = cgpv.api.map(mapId).layer.vector?.addPolygon(
+//             element, {
+//             style: {
+//               strokeColor: '#3d85c6',
+//               strokeWidth: 5,
+//               strokeOpacity: 1,
+//             },
+//           }
+//           );
+//         };
+//       }
+//       document.getElementById('loader').style.visibility = "hidden";;
+//     })
+//     .catch(function (error) {
+//       document.getElementById('loader').style.visibility = "hidden";
+//       console.log(error);
+//     })
+// }
 
 function addLayer(geoJson){
   console.log(geoJson);
