@@ -8,8 +8,8 @@ export async function getCachement(long, lat, projection) {
 
   const defaultId = cgpv.api.map(mapId).layer.vector?.defaultGeometryGroupId;
   console.log(long + " " + lat + " " + projection)
-  // axios.get('http://localhost:8080/users/neo2/' + long + '/' + lat + '/' + projection)
-  axios.get('http://localhost:8080/drainage/area/' + long + '/' + lat + '/' + projection)
+  // axios.get('http://localhost:3000/users/neo2/' + long + '/' + lat + '/' + projection)
+  axios.get('http://localhost:3000/drainage/area/' + long + '/' + lat + '/' + projection)
     .then(function (response) {
       console.log(response);
       //cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
@@ -98,7 +98,7 @@ export async function getDownstream(long, lat, projection) {
 
   const defaultId = cgpv.api.map(mapId).layer.vector?.defaultGeometryGroupId;
   console.log(long + " " + lat + " " + projection)
-  axios.get('http://localhost:8080/downstream/segment/' + long + '/' + lat + '/' + projection)
+  axios.get('http://localhost:3000/downstream/segment/' + long + '/' + lat + '/' + projection)
     .then(function (response) {
       console.log(response);
       //cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
@@ -143,7 +143,7 @@ export async function getDownstream(long, lat, projection) {
 
 //   const defaultId = cgpv.api.map(mapId).layer.vector?.defaultGeometryGroupId;
 //   console.log(long + " " + lat + " " + projection)
-//   axios.get('http://localhost:8080/users/downstream/' + long + '/' + lat + '/' + projection)
+//   axios.get('http://localhost:3000/users/downstream/' + long + '/' + lat + '/' + projection)
 //     .then(function (response) {
 //       console.log(response);
 //       //cgpv.api.map(mapId).layer.vector?.deleteGeometriesFromGroup(defaultId);
