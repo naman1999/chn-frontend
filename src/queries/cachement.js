@@ -18,7 +18,7 @@ export async function getCachement(long, lat, projection) {
         const geom = cgpv.api.map(mapId).layer.vector?.addPolygon(
           response.data.features[0].geometry.coordinates, {
           style: {
-            strokeColor: '#3d85c6',
+            strokeColor: '#cc5bbd',
             strokeWidth: 5,
             strokeOpacity: 1,
           },
@@ -31,7 +31,7 @@ export async function getCachement(long, lat, projection) {
           const geom = cgpv.api.map(mapId).layer.vector?.addPolygon(
             element, {
             style: {
-              strokeColor: '#3d85c6',
+              strokeColor: '#cc5bbd',
               strokeWidth: 5,
               strokeOpacity: 1,
             },
